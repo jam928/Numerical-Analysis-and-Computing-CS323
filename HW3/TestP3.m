@@ -1,0 +1,20 @@
+function TestP3
+A0 = (2*rand-1); A1 = (2*rand-1)*2;
+A2 = (2*rand-1)*3; A3 = (2*rand-1)*4;
+x = -20:0.01:20;
+y = A0 + A1*x + A2.*x.^2 + A3.*x.^3;
+ind = randsample(length(x),4);
+x0 = x(ind(1)); y0 = y(ind(1));
+x1 = x(ind(2)); y1 = y(ind(2));
+x2 = x(ind(3)); y2 = y(ind(3));
+x3 = x(ind(4)); y3 = y(ind(4));
+L0 = (x-x1).*(x-x2).*(x-x3)./((x0-x1)*(x0-x2)*(x0-x3));
+L1 = (x-x0).*(x-x2).*(x-x3)/((x1-x0)*(x1-x2)*(x1-x3));
+L2 = (x-x0).*(x-x1).*(x-x3)/((x2-x0)*(x2-x1)*(x2-x3));
+L3 = (x-x0).*(x-x1).*(x-x2)/((x3-x0)*(x3-x2)*(x3-x1));
+Y = y0*L0 + y1*L1 + y2*L2+y3*L3;
+figure;
+plot(x,y,'k-','linewidth',2);hold on; grid on;
+plot(x,Y,'r--','linewidth',2);
+set(gca,'fontsize',20);xlabel('x');ylabel('y');
+plot([x0 x1 x2 x3],[y0 y1 y2 y3],'go','linewidth',3);
